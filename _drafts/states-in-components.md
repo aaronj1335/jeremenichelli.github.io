@@ -17,11 +17,11 @@ By giving _props_ this role, you will favor a unique down data flow direction wh
 
 ## State
 
-The _state_ of a component is a set of internal properties that can change during its life cycle, like _props_, affecting the resulting output of its render function.
+The _state_ of a component is a set of internal properties that also affects the resulting output of its render function.
 
 > “Simplicity is prerequisite for reliability.” - Edsger W. Dijkstra
 
-Here is probably where most of the misconceptions take place. I've seen developers over populate a component's state unnecessarily which increases the complexity of the application.
+Here is probably where most of the misconceptions take place. I've seen developers overpopulate a component's state unnecessarily which increases the complexity of the application.
 
 ### Should a property belong to the state?
 
@@ -93,11 +93,11 @@ The component from above can be transformed into a function component and it is 
 
 ## Stateful components and dumb components
 
-Applications can become complex as they are developed, but if we embrace _simplicity_ concepts from its birth it will be easy to scale over it.
+Applications can become complex as they grow, but if we embrace _simplicity_ concepts from its birth it will scale more easily.
 
-To achieve this is preferable to have a lot of **stateless** components that are _dumb_ don't know what is happening inside the app, they just receive props and render the output and a few **stateful** components which pass data down to the first ones.
+To achieve this is preferable to have a lot of **stateless** components that are _dumb_ and don't know what's happening inside the app, they just receive props and render the output.
 
-The **stateful** ones should contain what determinates a new render cycle but no logic, since it should be decoupled and imported from an external module.
+The **stateful** ones should contain and pass down the date determining new render cycles but no logic. Logic should be decoupled and come from an external module.
 
 ```
 business_logic_module => stateful_component => stateless_component(s)
@@ -110,7 +110,7 @@ Changes in states are the ones that end up triggering render cycles, so generall
 
 If you find yourself writing a lot of `shouldComponentUpdate` functions across your project to prevent wasted performance, the reason could be that **states** should be removed from _leaf components_ and be treated as **props**.
 
-Another symptom is when the logic inside the `shouldComponentUpdate` becomes too big and hard to read. This is usually a sign that the component should _pour down_ data as _props_ to less complex ones.
+Another symptom is when the logic inside `shouldComponentUpdate` becomes too big or harder to read. This is usually a sign that the component should _pour down_ data to less complex ones.
 
 
 ## Wrap-up
@@ -118,5 +118,7 @@ Another symptom is when the logic inside the `shouldComponentUpdate` becomes too
 Defering to _stateless_ components over _stateful_ ones will make your project more suitable for testing, less fragmented and more reliable.
 
 > “The cheapest, fastest, and most reliable components are those that aren’t there.” - Gordon Bell
+
+Even when they won't make it to the code base, write `shouldComponentUpdate` functions to unveil situations where a separation of concerns is needed.
 
 It is good to mention though this is a personal take around states and data, most of the concepts respond to general software design rules and shared views on component based development in web community.
