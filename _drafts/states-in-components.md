@@ -8,7 +8,7 @@ I will explore different ways React component are able to contain information an
 
 ## Props
 
-By definition _props_ are basically properties that come from the parent's component affecting the final output.
+By definition _props_ are basically properties that come from the component's parent affecting the final output.
 
 **Props** must be first class citizen in your application code base, and you should try to achieve all possible _flavors_ or variants using them.
 
