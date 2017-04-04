@@ -1,27 +1,29 @@
 ---
 layout: default
-title: Data, state and components
-resume: The versatility provided by class based components usually leads to data misplacing inside a modern web app. This is a short and basic take around components internals regarding data.
+title: State and data treatment for components
+resume: React not only changed the way we build our interfaces but also put data in the spotlight. This is a short take around components internals and good and bad cases of data misplacing and states.
 ---
 
 I will explore different ways React component are able to contain information and how to detect cases where it might be better to move it to a different place.
 
 ## Props
 
-By definition _props_ are basically data which will affect the component output, though it is not held by it but by its parent.
+By definition _props_ are basically properties that come from the parent's component affecting the final output.
 
-**Props** must be first class citizen in your application code base, try to accomplish all possible _flavors_ or variants using them.
+**Props** must be first class citizen in your application code base, and you should try to achieve all possible _flavors_ or variants using them.
 
 By giving _props_ this role, you will favor a unique down data flow direction which will translate in better control over render cycles and performance.
 
 
 ## State
 
-The _state_ of a component is a set of internal properties that also affects the resulting output of its render function.
+The _state_ of a component is also a set of properties that affects the result of its render function, but this time they live internally in the component.
+
+Here is probably where most of the misconceptions take place, putting a piece of data on a component's state should be a well thought decision.
 
 > “Simplicity is prerequisite for reliability.” - Edsger W. Dijkstra
 
-Here is probably where most of the misconceptions take place. I've seen developers overpopulate a component's state unnecessarily which increases the complexity of the application.
+Before setting a state it would be better to re-think i
 
 ### Should a property belong to the state?
 
@@ -35,7 +37,7 @@ If a piece of data doesn't pass these requirements then it should be treated as 
 
 #### Quick example
 
-Let's imagine a component which returns a different element depending on the detected device.
+Let's imagine a component which output changes depending on the type of device.
 
 ```js
 import { Component } from 'react';
@@ -62,9 +64,9 @@ class Header extends Component {
 }
 ```
 
-The `isMobile` property checks the first axiom and it alters the output, but it doesn't check the second one because once the component has been rendered there's no way the device will change once the site has loaded.
+`isMobile` property checks the first axiom as it alters the output, but bit the second one because. After the component has been rendered the device won't change once the site has loaded.
 
-So it's better to move it outside the component as a constant value.
+So it's better to treat it as a _prop_ in case a parent component holds this value or move it outside the component as a constant value.
 
 ```js
 import { Component } from 'react';
@@ -88,29 +90,31 @@ class Header extends Component {
 }
 ```
 
-The component from above can be transformed into a function component and it is easier to test now by just mocking the `userAgent` value.
+The component from above can even be transformed into a functional component and it's now easier to test by just mocking the `userAgent` value.
 
 
 ## Stateful components and dumb components
 
-Applications can become complex as they grow, but if we embrace _simplicity_ concepts from its birth it will scale more easily.
+Applications usually become more complex as they grow, but if we embrace simplicity concepts from its birth it will scale more easily.
 
-To achieve this is preferable to have a lot of **stateless** components that are _dumb_ and don't know what's happening inside the app, they just receive props and render the output.
+It is preferable to have a lot of **stateless** and _dumb_ components that don't know what's happening inside the app, they just receive props and render the output.
 
-The **stateful** ones should contain and pass down the date determining new render cycles but no logic. Logic should be decoupled and come from an external module.
+The **stateful** ones will hold and pass down the data, but no logic. Logic should be decoupled and come from an external module.
 
 ```
-business_logic_module => stateful_component => stateless_component(s)
+business_logic_module <=> stateful_component => stateless_component(s)
 ```
 
-Changes in states are the ones that end up triggering render cycles, so generally more stateless components means more control.
+State mutations are the ones that will trigger new render cycles, so the less you spread the state of your app the more control you will have over it.
 
 
 ### Hints
 
-If you find yourself writing a lot of `shouldComponentUpdate` functions across your project to prevent wasted performance, the reason could be that **states** should be removed from _leaf components_ and be treated as **props**.
+Using `shouldComponentUpdate` across your project will improve performance but also act as a great indicator.
 
-Another symptom is when the logic inside `shouldComponentUpdate` becomes too big or harder to read. This is usually a sign that the component should _pour down_ data to less complex ones.
+If you find yourself writing too much `shouldComponentUpdate` functions to prevent wasted performance could mean that **states** should be removed from _leaf components_ and passed as **props**.
+
+Another symptom is when the logic inside `shouldComponentUpdate` becomes too big or harder to read. This is usually a sign the component should _pour down_ data, again as _props_, to less complex ones.
 
 
 ## Wrap-up
@@ -121,4 +125,11 @@ Defering to _stateless_ components over _stateful_ ones will make your project m
 
 Even when they won't make it to the code base, write `shouldComponentUpdate` functions to unveil situations where a separation of concerns is needed.
 
-It is good to mention though this is a personal take around states and data, most of the concepts respond to general software design rules and shared views on component based development in web community.
+It is good to mention that, though this is a personal take around states and data, most of the concepts respond to general software design rules and shared views on component based development in web community.
+
+
+### Recommended readings
+
+- [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know) by Cam Jackson
+- [React State](https://medium.com/react-tutorials/react-state-14a6d4f736f5) by Christopher Pitt
+- [State and Lifecycle](https://facebook.github.io/react/docs/state-and-lifecycle.html) by React official docs
