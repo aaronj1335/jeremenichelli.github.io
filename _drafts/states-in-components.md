@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Props, state and data treatment in components
-resume: React not only changed the way we build our interfaces but also put data in the spotlight. This is a short take around components internals and good and bad cases of data misplacing and states.
+resume: React not only changed the way we build our interfaces but also put data in the spotlight. This is a short take around components internals, data and states.
 ---
 
 I will explore different ways React component are able to contain information and how to detect cases where it might be better to move it to a different place.
