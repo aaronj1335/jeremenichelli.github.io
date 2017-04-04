@@ -66,7 +66,7 @@ class Header extends Component {
 
 `isMobile` property checks the first axiom as it alters the output, but not the second one because after the component has been rendered the device won't change.
 
-So it's better to treat it as a _prop_ in case a parent component holds this value or move it outside the component as a constant value.
+It's better to treat it as a _prop_ in case a parent component holds this value or move it outside the component as a constant value.
 
 ```js
 import { Component } from 'react';
