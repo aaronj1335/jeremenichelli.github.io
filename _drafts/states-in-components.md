@@ -1,6 +1,6 @@
 ---
 layout: default
-title: State and data treatment for components
+title: Props, state and data treatment in components
 resume: React not only changed the way we build our interfaces but also put data in the spotlight. This is a short take around components internals and good and bad cases of data misplacing and states.
 ---
 
@@ -19,11 +19,11 @@ By giving _props_ this role, you will favor a unique down data flow direction wh
 
 The _state_ of a component is also a set of properties that affects the result of its render function, but this time they live internally in the component.
 
-Here is probably where most of the misconceptions take place, putting a piece of data on a component's state should be a well thought decision.
-
 > “Simplicity is prerequisite for reliability.” - Edsger W. Dijkstra
 
-Before setting a state it would be better to re-think i
+States are necessary, specially to respond to user input and data fetching, but they also add complexity.
+
+That's why storing a value in a component's state should be a well thought decision.
 
 ### Should a property belong to the state?
 
@@ -105,30 +105,24 @@ The **stateful** ones will hold and pass down the data, but no logic. Logic shou
 business_logic_module <=> stateful_component => stateless_component(s)
 ```
 
-State mutations are the ones that will trigger new render cycles, so the less you spread the state of your app the more control you will have over it.
+State mutations are the ones that will trigger updates down the render tree. The less you spread the state of your app, the easier it gets to control them.
 
 
 ### Hints
 
-Using `shouldComponentUpdate` across your project will improve performance but also act as a great indicator.
+Using `shouldComponentUpdate` across your project also acts as a great indicator of bad design around components.
 
-If you find yourself writing too much `shouldComponentUpdate` functions to prevent wasted performance could mean that **states** should be removed from _leaf components_ and passed as **props**.
-
-Another symptom is when the logic inside `shouldComponentUpdate` becomes too big or harder to read. This is usually a sign the component should _pour down_ data, again as _props_, to less complex ones.
+If you find yourself writing too much `shouldComponentUpdate` functions or the logic inside of them is too complex, try uprising states to a higher component and pass _props_ to less complex ones.
 
 
 ## Wrap-up
 
 Defering to _stateless_ components over _stateful_ ones will make your project more suitable for testing, less fragmented and more reliable.
 
-> “The cheapest, fastest, and most reliable components are those that aren’t there.” - Gordon Bell
-
 Even when they won't make it to the code base, write `shouldComponentUpdate` functions to unveil situations where a separation of concerns is needed.
 
-It is good to mention that, though this is a personal take around states and data, most of the concepts respond to general software design rules and shared views on component based development in web community.
 
-
-### Recommended readings
+#### Recommended readings
 
 - [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know) by Cam Jackson
 - [React State](https://medium.com/react-tutorials/react-state-14a6d4f736f5) by Christopher Pitt
