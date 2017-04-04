@@ -25,6 +25,7 @@ States are necessary, specially to respond to user input and data fetching, but 
 
 That's why storing a value in a component's state should be a well thought decision.
 
+
 ### Should a property belong to the state?
 
 These are three axioms I think a property should pass to be placed inside a state:
@@ -34,6 +35,7 @@ These are three axioms I think a property should pass to be placed inside a stat
 - The property is changed by an action which takes place inside the component.
 
 If a piece of data doesn't pass these requirements then it should be treated as a _prop_ or even a constant value outside the component.
+
 
 #### Quick example
 
