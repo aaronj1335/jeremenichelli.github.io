@@ -8,11 +8,11 @@ I will explore different ways React component are able to contain information an
 
 ## Props
 
-By definition _props_ are basically properties that come from the component's parent affecting its final output.
+By definition _props_ are initial properties that affect how a component is rendered.
 
 **Props** must be first class citizen in your application code base, and you should try to achieve all possible _flavors_ or variants using them.
 
-By giving _props_ this role, you will favor a unique down data flow direction which will translate in better control over render cycles and performance.
+By giving _props_ this role, you will favor a unique down data flow direction.
 
 
 ## State
