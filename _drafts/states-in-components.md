@@ -31,7 +31,7 @@ These are three axioms I think a property should pass to be placed inside a stat
 
 - The property must alter the render output.
 - The property might change over the component's life cycle.
-- The property change is triggered by an interaction inside the component.
+- The property is changed by an action which takes place inside the component.
 
 If a piece of data doesn't pass these requirements then it should be treated as a _prop_ or even a constant value outside the component.
 
